@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  item-app:
+    image: docker.pkg.github.com/<nama_pengguna_github>/<nama_repositori>/item-app:v1
+    ports:
+      - 80:8080
+    depends_on:
+      - item-db
+    restart: always # Restart policy agar container selalu restart ketika terhenti
+
+  item-db:
+    image: mongo:3
+    volumes:
+      - app-db:/data/db
+
+volumes:
+  app-db:
