@@ -1,1 +1,1 @@
-ywauran/item-app:v1
+https://hub.docker.com/r/ywauran/item-app

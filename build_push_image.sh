@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Perintah untuk membuat Docker image dari Dockerfile dengan nama image item-app dan tag v1
-docker build -t item-app:v1 .
+docker build -t ywauran/item-app:v1 .
 
 # Melihat daftar image di lokal
 docker images
