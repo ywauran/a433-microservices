@@ -1,0 +1,2 @@
+karsajobs: https://hub.docker.com/repository/docker/ywauran/karsajobs/general
+karsajobs-ui: https://hub.docker.com/repository/docker/ywauran/karsajobs-ui/general
