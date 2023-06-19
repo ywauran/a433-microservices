@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  shipping-service:
+    image: ywauran/shipping-service:v1
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./app:/app
+    environment:
+      - PORT=3001
+      - AMQP_URL=amqp://localhost:5672
+    restart: always
+# Ini adalah file docker-compose.yml
+# Definisikan layanan shipping-service untuk aplikasi shipping
+# Menggunakan gambar Docker ywauran/shipping-service:v1
+# Menghubungkan port 3001 di host ke port 3001 di dalam kontainer
+# Mengaitkan volume ./app pada host dengan direktori /app di dalam kontainer
+# Menetapkan variabel lingkungan PORT=3001 dan AMQP_URL=amqp://localhost:5672
+# Kontainer akan selalu dijalankan ulang jika terjadi kegagalan
