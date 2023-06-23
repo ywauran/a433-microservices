@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  shipping-service:
+    build: .
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_network
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: rabbitmq-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - rabbitmq_network
+
+volumes:
+  rabbitmq-data:
+  rabbitmq-log:
+
+networks:
+  rabbitmq_network:
+    driver: bridge

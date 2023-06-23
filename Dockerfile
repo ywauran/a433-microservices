@@ -1,17 +1,20 @@
-# Menggunakan base image Node.js versi 14
+# Specify the base image
 FROM node:14-alpine
 
-# Menentukan working directory untuk container
+# Set the working directory
 WORKDIR /app
 
-# Menyalin seluruh source code ke working directory di container
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy the source code
 COPY . .
 
-# Menginstal dependencies
-RUN npm install
-
-# Ekspos port yang digunakan oleh aplikasi (3001)
+# Expose the port
 EXPOSE 3001
 
-# Saat container diluncurkan, jalankan server dengan perintah npm start
-CMD ["npm", "start"]
+# Start the application
+CMD [ "node", "index.js" ]
