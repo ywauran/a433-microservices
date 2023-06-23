@@ -1,32 +1,30 @@
-version: "3.8"
+version: "3.2"
 services:
-  order-service:
-    build: .
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    depends_on:
-      - rabbitmq
-    networks:
-      - rabbitmq_network
-
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
-    container_name: rabbitmq-management
+    container_name: "rabbitmq_container"
     ports:
-      - 5672:5672
-      - 15672:15672
+      - 5673:5672
+      - 15673:15672
     volumes:
-      - rabbitmq-data:/var/lib/rabbitmq/
-      - rabbitmq-log:/var/log/rabbitmq
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - rabbitmq_network
-
-volumes:
-  rabbitmq-data:
-  rabbitmq-log:
-
+  order-service:
+    image: ywauran/order-service:v1
+    depends_on:
+      - "rabbitmq"
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=60 -- node index.js'
+    networks:
+      - rabbitmq_network
+  shipping-service:
+    image: ywauran/shipping-service:v1
+    depends_on:
+      - "rabbitmq"
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=60 -- node index.js'
+    networks:
+      - rabbitmq_network
 networks:
   rabbitmq_network:
     driver: bridge
